@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "프롬클립",
+      "hasCanvas": false,
+      "bodyTextLen": 1422,
+      "bodyTextHash": "85c7c322b90fdb9d1a6dcf99246e92b42e7eed93aba2a6b04583078351b3da1b",
+      "bodyTextPrefix": "프롬클립 카테고리에서 골라 합칩니다. 한 칸에서 여러 개도 됩니다 조합 보관함 새 프롬프트 카테고리를 열어 조각을 ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "프롬클립",
+      "hasCanvas": false,
+      "bodyTextLen": 1386,
+      "bodyTextHash": "722d42cbcbc2ec88bb4d61c2926b423d95d6ffb2bd0383096deadf419612fe20",
+      "bodyTextPrefix": "프롬클립 추가 조합 보관함 카테고리를 열어 조각을 고르면 아래 순서대로 합쳐집니다. 한 카테고리에서 여러 개를 고를",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

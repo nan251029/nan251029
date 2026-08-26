@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino,
+    Georgia, serif;
+
+  --color-background: #efeae2;
+  --color-foreground: #1c1916;
+  --color-card: #f8f5ef;
+  --color-card-foreground: #1c1916;
+  --color-popover: #f8f5ef;
+  --color-popover-foreground: #1c1916;
+  --color-primary: #2f4a63;
+  --color-primary-foreground: #f4f1eb;
+  --color-secondary: #e7e0d6;
+  --color-secondary-foreground: #1c1916;
+  --color-muted: #e4ddd3;
+  --color-muted-foreground: #6e6860;
+  --color-accent: #e7e0d6;
+  --color-accent-foreground: #1c1916;
+  --color-destructive: #8f2d2d;
+  --color-destructive-foreground: #f8f5ef;
+  --color-border: #d8d0c4;
+  --color-input: #d8d0c4;
+  --color-ring: #2f4a63;
+  --color-copied: #2d6a4f;
+  --color-copied-foreground: #f4f1eb;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius: 12px;
+
+  --shadow-border:
+    0 0 0 1px rgb(28 25 22 / 0.06), 0 1px 2px -1px rgb(28 25 22 / 0.06),
+    0 2px 4px 0 rgb(28 25 22 / 0.04);
+  --shadow-border-hover:
+    0 0 0 1px rgb(28 25 22 / 0.1), 0 2px 8px -2px rgb(28 25 22 / 0.1),
+    0 4px 12px 0 rgb(28 25 22 / 0.05);
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgb(28 25 22 / 0.035) 1px,
+      transparent 0
+    );
+    background-size: 18px 18px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility shadow-border {
+  box-shadow: var(--shadow-border);
+}
+
+@utility shadow-border-hover {
+  box-shadow: var(--shadow-border-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
