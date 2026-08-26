@@ -35,20 +35,20 @@ export function PromptCard({
   return (
     <article
       className={cn(
-        "flex flex-col rounded-lg bg-card p-3 shadow-border transition-[box-shadow,transform] duration-150 ease-out",
+        "flex flex-col rounded-md bg-card px-2.5 py-2 shadow-border transition-[box-shadow,transform] duration-150 ease-out",
         "hover:shadow-border-hover",
         copied && "ring-2 ring-copied/40",
       )}
     >
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-1">
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <Badge>{categoryName}</Badge>
+          <div className="flex flex-wrap items-center gap-1">
+            <Badge className="h-5 px-1.5 text-[10px]">{categoryName}</Badge>
             {prompt.pinned ? (
-              <span className="text-xs font-medium text-primary">고정</span>
+              <span className="text-[10px] font-medium text-primary">고정</span>
             ) : null}
           </div>
-          <h3 className="mt-1 font-display text-base font-semibold leading-snug text-foreground">
+          <h3 className="mt-0.5 truncate font-display text-sm font-semibold leading-tight text-foreground">
             {prompt.title}
           </h3>
         </div>
@@ -59,12 +59,12 @@ export function PromptCard({
             size="icon-sm"
             aria-label={prompt.pinned ? "고정 해제" : "위에 고정"}
             onClick={onTogglePin}
-            className="text-muted-foreground"
+            className="size-7 text-muted-foreground"
           >
             {prompt.pinned ? (
-              <PinOff className="size-4" />
+              <PinOff className="size-3.5" />
             ) : (
-              <Pin className="size-4" />
+              <Pin className="size-3.5" />
             )}
           </Button>
           <DropdownMenu>
@@ -74,9 +74,9 @@ export function PromptCard({
                 variant="ghost"
                 size="icon-sm"
                 aria-label="더 보기"
-                className="text-muted-foreground"
+                className="size-7 text-muted-foreground"
               >
-                <MoreHorizontal className="size-4" />
+                <MoreHorizontal className="size-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -102,25 +102,25 @@ export function PromptCard({
         </div>
       </div>
 
-      <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground whitespace-pre-wrap">
+      <p className="mt-0.5 line-clamp-1 text-[11px] leading-snug text-muted-foreground">
         {prompt.body || "내용 없음"}
       </p>
 
-      <div className="mt-2.5 flex items-center justify-between gap-3">
-        <span className="text-xs tabular-nums text-muted-foreground">
-          {prompt.copyCount > 0 ? `${prompt.copyCount}회 복사` : "아직 안 씀"}
+      <div className="mt-1.5 flex items-center justify-between gap-2">
+        <span className="text-[11px] tabular-nums text-muted-foreground">
+          {prompt.copyCount > 0 ? `${prompt.copyCount}회` : "미사용"}
         </span>
         <Button
           type="button"
           variant={copied ? "copied" : "default"}
           size="sm"
           onClick={onCopy}
-          className="min-w-20"
+          className="h-7 min-w-16 px-2 text-xs"
         >
-          <span className="relative size-4">
+          <span className="relative size-3.5">
             <Copy
               className={cn(
-                "absolute inset-0 size-4 transition-[opacity,transform,filter] duration-200 ease-out",
+                "absolute inset-0 size-3.5 transition-[opacity,transform,filter] duration-200 ease-out",
                 copied
                   ? "scale-[0.25] opacity-0 blur-[4px]"
                   : "scale-100 opacity-100 blur-none",
@@ -128,7 +128,7 @@ export function PromptCard({
             />
             <Check
               className={cn(
-                "absolute inset-0 size-4 transition-[opacity,transform,filter] duration-200 ease-out",
+                "absolute inset-0 size-3.5 transition-[opacity,transform,filter] duration-200 ease-out",
                 copied
                   ? "scale-100 opacity-100 blur-none"
                   : "scale-[0.25] opacity-0 blur-[4px]",
