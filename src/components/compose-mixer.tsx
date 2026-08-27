@@ -32,9 +32,9 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
 
   const [picked, setPicked] = useState<Record<string, string[]>>({});
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
-  const [joinStyle, setJoinStyle] = useState<JoinStyle>("comma");
+  const [joinStyle, setJoinStyle] = useState<JoinStyle>("newline");
   const [copied, setCopied] = useState(false);
-  const [previewOpen, setPreviewOpen] = useState(true);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const ordered = sortCategories(categories);
   const uncategorized = prompts.filter((p) => !p.categoryId);
@@ -128,10 +128,10 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
 
   return (
     <div className="pb-44">
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-          카테고리를 열어 조각을 고르면 아래 순서대로 합쳐집니다. 한 카테고리에서
-          여러 개를 고를 수 있고, 위아래 화살표로 합치는 순서를 바꿀 수 있습니다.
+          이름만 보고 고르세요. 한 카테고리에서 여러 개를 고를 수 있고, 위아래
+          화살표로 합치는 순서를 바꿀 수 있습니다.
         </p>
         <button
           type="button"
@@ -142,7 +142,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
         </button>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         {sections.map((section, index) => {
           const isCollapsed = Boolean(collapsed[section.key]);
           const selectedIds = picked[section.key] ?? [];
@@ -152,7 +152,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
               key={section.key}
               className="min-w-0 overflow-hidden rounded-lg bg-card shadow-border"
             >
-              <div className="flex items-center justify-between gap-2 px-2 py-1.5">
+              <div className="flex items-center justify-between gap-2 px-2 py-1">
                 <div className="flex min-w-0 items-center gap-1">
                   {section.movable ? (
                     <div className="flex">
@@ -161,7 +161,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
                         aria-label={`${section.name} 위로`}
                         disabled={index === 0}
                         onClick={() => moveCategory(section.key, -1)}
-                        className="flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-muted disabled:opacity-30"
+                        className="flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted disabled:opacity-30"
                       >
                         <ChevronUp className="size-4" />
                       </button>
@@ -170,7 +170,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
                         aria-label={`${section.name} 아래로`}
                         disabled={index === ordered.length - 1}
                         onClick={() => moveCategory(section.key, 1)}
-                        className="flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-muted disabled:opacity-30"
+                        className="flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted disabled:opacity-30"
                       >
                         <ChevronDown className="size-4" />
                       </button>
@@ -180,7 +180,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
                     type="button"
                     aria-expanded={!isCollapsed}
                     onClick={() => toggleCollapsed(section.key)}
-                    className="flex min-w-0 items-center gap-2 rounded-md px-2 py-2 text-left hover:bg-muted"
+                    className="flex min-w-0 items-center gap-2 rounded-md px-2 py-1.5 text-left hover:bg-muted"
                   >
                     <ChevronDown
                       className={cn(
@@ -188,7 +188,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
                         isCollapsed && "-rotate-90",
                       )}
                     />
-                    <h2 className="font-display text-lg font-semibold">
+                    <h2 className="font-display text-base font-semibold">
                       {section.name}
                     </h2>
                     <span className="text-xs tabular-nums text-muted-foreground">
@@ -222,11 +222,11 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
               >
                 <div className="overflow-hidden">
                   {section.items.length === 0 ? (
-                    <p className="px-4 pb-4 text-sm text-muted-foreground">
+                    <p className="px-4 pb-3 text-sm text-muted-foreground">
                       이 카테고리가 비어 있습니다. 조각을 추가하세요.
                     </p>
                   ) : (
-                    <div className="flex gap-2 overflow-x-auto px-3 pb-3 [scrollbar-width:thin]">
+                    <div className="flex flex-wrap gap-1.5 px-3 pb-3">
                       {section.items.map((prompt) => {
                         const selected = selectedIds.includes(prompt.id);
                         return (
@@ -234,32 +234,28 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
                             key={prompt.id}
                             type="button"
                             aria-pressed={selected}
+                            title={prompt.body}
                             onClick={() => toggle(section.key, prompt.id)}
                             className={cn(
-                              "w-52 shrink-0 rounded-md bg-background p-2.5 text-left shadow-border transition-[box-shadow,background-color] duration-150",
+                              "inline-flex max-w-full items-center gap-1.5 rounded-md px-2 py-1 text-left text-sm shadow-border transition-[box-shadow,background-color,color] duration-150",
                               selected
-                                ? "ring-2 ring-primary"
-                                : "hover:shadow-border-hover",
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-background text-foreground hover:shadow-border-hover",
                             )}
                           >
-                            <div className="flex items-start justify-between gap-2">
-                              <p className="font-medium leading-snug text-foreground">
-                                {prompt.title}
-                              </p>
-                              <span
-                                className={cn(
-                                  "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-sm border",
-                                  selected
-                                    ? "border-primary bg-primary text-primary-foreground"
-                                    : "border-border text-transparent",
-                                )}
-                              >
-                                <Check className="size-3" />
-                              </span>
-                            </div>
-                            <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-                              {prompt.body}
-                            </p>
+                            <span
+                              className={cn(
+                                "flex size-3.5 shrink-0 items-center justify-center rounded-sm border",
+                                selected
+                                  ? "border-primary-foreground/80 bg-primary-foreground text-primary"
+                                  : "border-border text-transparent",
+                              )}
+                            >
+                              <Check className="size-2.5" />
+                            </span>
+                            <span className="max-w-40 truncate font-medium leading-tight">
+                              {prompt.title}
+                            </span>
                           </button>
                         );
                       })}
@@ -307,7 +303,7 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
           )}
 
           {previewOpen && combined ? (
-            <p className="line-clamp-3 rounded-lg bg-card px-3 py-2 text-sm leading-relaxed text-foreground shadow-border">
+            <p className="line-clamp-3 whitespace-pre-wrap rounded-lg bg-card px-3 py-2 text-sm leading-relaxed text-foreground shadow-border">
               {combined}
             </p>
           ) : null}
@@ -316,8 +312,8 @@ export function ComposeMixer({ onAddPrompt }: ComposeMixerProps) {
             <div className="flex rounded-lg bg-secondary p-1">
               {(
                 [
-                  ["comma", "쉼표로 잇기"],
                   ["newline", "줄바꿈"],
+                  ["comma", "쉬표로 잇기"],
                 ] as const
               ).map(([style, label]) => (
                 <button
